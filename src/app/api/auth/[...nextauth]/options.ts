@@ -62,7 +62,7 @@ export const authOptions:NextAuthOptions=
         {
          if(user)
          {
-            token._id=user._id;
+            token._id=user._id?.toString();
             token.isVerified=user.isVerified;
             token.isAcceptingMessages=user.isAcceptingMessages;
             token.username=user.username;
@@ -82,7 +82,7 @@ export const authOptions:NextAuthOptions=
         }
     },
 
-    secret:process.env.NEXTAUTH_URL,
+    secret:process.env.NEXTAUTH_SECRET,
 
         pages:{
             signIn:'/sign-in'
