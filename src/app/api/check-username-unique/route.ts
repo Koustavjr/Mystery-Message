@@ -43,7 +43,7 @@ export async function GET(request:Request)
         {
             return Response.json({
                 success:false,
-                message:"username already taken`"
+                message:"Username already taken`"
             },
         {status:401})
         }
