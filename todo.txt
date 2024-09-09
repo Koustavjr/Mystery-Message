@@ -1,1 +1,3 @@
-auth=>signIn=>page.tsx
+auth=>sign-in
+src=>app->(app)->dashboard
+src=>app->u->[username]

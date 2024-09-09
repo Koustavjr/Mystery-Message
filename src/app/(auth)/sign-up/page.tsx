@@ -79,7 +79,7 @@ export default function SignUpForm() {
           title:"Success",
           description:response.data.message
         })
-        router.replace(`/verify/{username}`)
+        router.replace(`/verify/${username}`)
         setIsSubmitting(false)
       } catch (error) {
         const axiosError = error as AxiosError<ApiResponse>
@@ -137,7 +137,7 @@ export default function SignUpForm() {
              
               <Input placeholder="Email" {...field} name="email"
               />
-              <p className="text-muted text-gray-800 text-sm">We will send you a verification code</p>
+              <p className="text-muted text-blue-400 text-sm">We will send you a verification code</p>
               <FormMessage />
             </FormItem>
           )}
