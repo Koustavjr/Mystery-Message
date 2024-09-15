@@ -16,7 +16,7 @@ export async function POST(request:Request)
             success:false,
             message:"Problem in accept-message"
         },
-    {status:404});
+    {status:402});
     }
 
     const userId=user._id;
@@ -24,7 +24,7 @@ export async function POST(request:Request)
     try {
         const newUser= await UserModel.findByIdAndUpdate(
             userId,
-            {isAcceptingMessage:acceptMessages},
+            {isAcceptingMessages:acceptMessages},
             {new:true}
         )
 
@@ -64,9 +64,9 @@ export async function  GET(request:Request)
     {
         return Response.json({
             success:false,
-            message:"Problem in accept-message"
+            message:"not authenticated"
         },
-    {status:404});
+    {status:400});
     }
 
     const userId = user._id;
@@ -78,14 +78,14 @@ export async function  GET(request:Request)
         {
             return Response.json({
                 success:false,
-                message:"Problem in accept-message"
+                message:"user not found"
             },
         {status:404});
         }
 
        return  Response.json({
             success:true,
-            message:foundUser.isAcceptingMessage
+            message:foundUser.isAcceptingMessages + " "+foundUser.username
         },
     {status:200});
         

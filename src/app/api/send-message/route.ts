@@ -12,7 +12,7 @@ export async function POST(request:Request)
         {
             return Response.json({
                 success:false,
-                message:"Problem in send-message"
+                message:"User not found"
             },
         {status:404});
         }
