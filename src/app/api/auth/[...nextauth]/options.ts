@@ -2,7 +2,7 @@ import { NextAuthOptions } from "next-auth";
 import dbConnect from "@/lib/dbConnect";
 import CredentialsProvider  from "next-auth/providers/credentials";
 import UserModel from "@/model/User";
-import bcryptjs from "bcryptjs"
+import bcrypt from "bcryptjs"
 import { pages } from "next/dist/build/templates/app-page";
 
 export const authOptions:NextAuthOptions=
@@ -12,7 +12,7 @@ export const authOptions:NextAuthOptions=
             id:"credentials",
             name:'Credentials',
             credentials:{
-                email: { label: "email", type: "text"},
+                email: { label: "Email", type: "text"},
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials:any):Promise<any>
@@ -26,7 +26,8 @@ export const authOptions:NextAuthOptions=
                             {username:credentials.identifier}
                         ]
                     })
-
+                    console.log('user '+user);
+                    
                     if(!user)
                     {
                         throw new Error("User doesnot exist!")
@@ -37,7 +38,7 @@ export const authOptions:NextAuthOptions=
                         throw new Error("User is not verified!")
                     }
                     
-                    const isPasswordCorrect = await bcryptjs.compare(credentials.password,user.password);
+                    const isPasswordCorrect = await bcrypt.compare(credentials.password,user.password);
 
                     if(isPasswordCorrect)
                     {
@@ -58,7 +59,7 @@ export const authOptions:NextAuthOptions=
     ],
     callbacks:{
 
-        async jwt({user,token})
+        async jwt({token,user})
         {
          if(user)
          {
@@ -81,13 +82,14 @@ export const authOptions:NextAuthOptions=
             return session;
         }
     },
+    session:{
+        strategy:"jwt"
+    },
 
     secret:process.env.NEXTAUTH_SECRET,
 
         pages:{
             signIn:'/sign-in'
-        },
-        session:{
-            strategy:"jwt"
         }
+        
 }

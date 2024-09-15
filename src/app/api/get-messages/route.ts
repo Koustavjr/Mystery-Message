@@ -9,9 +9,11 @@ export async function GET(request:Request)
 {
     await dbConnect();
     const session = await getServerSession(authOptions);
-    const user: User = session?.user;
-
-    if(!session || !session.user)
+    const _user: User = session?.user;
+    console.log("Session "+session);
+    
+    
+    if(!session || !_user)
     {
        return Response.json({
             success:false,
@@ -19,7 +21,7 @@ export async function GET(request:Request)
         },
     {status:404});
     }
-    const userId= new mongoose.Types.ObjectId(user._id);
+    const userId= new mongoose.Types.ObjectId(_user._id);
 
     try {
         const user =await UserModel.aggregate([
@@ -28,13 +30,13 @@ export async function GET(request:Request)
             {$sort:{'messages.createdAt':-1}},
             {$group:{_id:'$_id',messages:{'$push':'$messages'}}}
 
-        ]).exec()
+        ])
 
         if(!user || user.length==0)
         {
             return Response.json({
                 success:false,
-                message:"Problem in get-message"
+                message:"User not found"
             },
         {status:404});
         }

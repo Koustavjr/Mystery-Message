@@ -2,12 +2,12 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import { Message } from "@/model/User";
 
-export async function GET(request:Request)
+export async function POST(request:Request)
 {
     await dbConnect();
      const {username,content}=await request.json();
     try {
-        const user = await UserModel.findOne(username);
+        const user = await UserModel.findOne({username});
         if(!user)
         {
             return Response.json({
@@ -17,7 +17,7 @@ export async function GET(request:Request)
         {status:404});
         }
 
-        if(!user.isAcceptingMessage)
+        if(!user.isAcceptingMessages)
         {
             return Response.json({
                 success:false,
