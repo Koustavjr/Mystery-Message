@@ -28,7 +28,7 @@
     "embla-carousel-autoplay": "^8.3.0",
     "embla-carousel-react": "^8.3.0",
     "lucide-react": "^0.438.0",
-    "mongoose": "^8.5.1",
+    "mongoose": "^8.24.1",
     "next": "16.4.3",
     "next-auth": "^4.24.15",
     "react": "^18",
